@@ -1,0 +1,267 @@
+{
+  "hydrogen": {
+    "count": 1,
+    "atoms": [
+      {
+        "proton": 2066,
+        "electron": 1787,
+        "distance": 2,
+        "net_charge": 0.0,
+        "binding": 0.47619047619047616
+      }
+    ],
+    "mean_binding": 0.47619047619047616,
+    "mean_distance": 2.0,
+    "status": "detected"
+  },
+  "helium": {
+    "count": 0,
+    "atoms": [],
+    "status": "none_found"
+  },
+  "heavier_elements": {
+    "count": 0,
+    "elements": [],
+    "Z_distribution": {},
+    "status": "none_found"
+  },
+  "ions": {
+    "count": 15,
+    "ions": [
+      {
+        "proton": 1673,
+        "electrons": 10,
+        "charge": -9.0,
+        "type": "H-10"
+      },
+      {
+        "proton": 1691,
+        "electrons": 10,
+        "charge": -9.0,
+        "type": "H-10"
+      },
+      {
+        "proton": 1697,
+        "electrons": 12,
+        "charge": -11.0,
+        "type": "H-12"
+      },
+      {
+        "proton": 1798,
+        "electrons": 9,
+        "charge": -8.0,
+        "type": "H-9"
+      },
+      {
+        "proton": 1822,
+        "electrons": 11,
+        "charge": -10.0,
+        "type": "H-11"
+      },
+      {
+        "proton": 1908,
+        "electrons": 10,
+        "charge": -9.0,
+        "type": "H-10"
+      },
+      {
+        "proton": 1934,
+        "electrons": 9,
+        "charge": -8.0,
+        "type": "H-9"
+      },
+      {
+        "proton": 2004,
+        "electrons": 8,
+        "charge": -7.0,
+        "type": "H-8"
+      },
+      {
+        "proton": 2023,
+        "electrons": 7,
+        "charge": -6.0,
+        "type": "H-7"
+      },
+      {
+        "proton": 2032,
+        "electrons": 7,
+        "charge": -6.0,
+        "type": "H-7"
+      },
+      {
+        "proton": 2047,
+        "electrons": 2,
+        "charge": -1.0,
+        "type": "H-2"
+      },
+      {
+        "proton": 2049,
+        "electrons": 4,
+        "charge": -3.0,
+        "type": "H-4"
+      },
+      {
+        "proton": 2056,
+        "electrons": 4,
+        "charge": -3.0,
+        "type": "H-4"
+      },
+      {
+        "proton": 2062,
+        "electrons": 2,
+        "charge": -1.0,
+        "type": "H-2"
+      },
+      {
+        "proton": 2064,
+        "electrons": 2,
+        "charge": -1.0,
+        "type": "H-2"
+      }
+    ],
+    "type_distribution": {
+      "H-10": 3,
+      "H-12": 1,
+      "H-9": 2,
+      "H-11": 1,
+      "H-8": 1,
+      "H-7": 2,
+      "H-2": 3,
+      "H-4": 2
+    },
+    "status": "detected"
+  },
+  "atom_statistics": {
+    "total_atoms": 1,
+    "total_ions": 15,
+    "n_protons": 16,
+    "n_electrons": 14,
+    "n_photons": 312,
+    "atom_formation_efficiency": 0.0625,
+    "status": "analyzed"
+  },
+  "binding_energy": {
+    "mean": 0.7365251663759126,
+    "std": 0.0,
+    "min": 0.7365251663759126,
+    "max": 0.7365251663759126,
+    "distribution": [
+      0.7365251663759126
+    ],
+    "status": "measured"
+  },
+  "lifetime_stability": {
+    "mean_survival_rate": 0.0,
+    "survival_rates": [
+      0,
+      0.0,
+      0.0,
+      0
+    ],
+    "n_snapshots": 5,
+    "status": "measured"
+  },
+  "thermal_stability": {
+    "T_current": 10.58893016835573,
+    "T_initial": 43.18723681088886,
+    "n_atoms": 1,
+    "stability_score": 0.09443824674455115,
+    "status": "measured"
+  },
+  "structural_integrity": {
+    "mean": 0.7663498524692555,
+    "std": 0.0,
+    "status": "measured"
+  },
+  "h2_molecules": {
+    "status": "insufficient_hydrogen",
+    "count": 0
+  },
+  "h2o_like": {
+    "status": "insufficient_components",
+    "count": 0
+  },
+  "organic_patterns": {
+    "status": "insufficient_atoms",
+    "count": 0
+  },
+  "ring_structures": {
+    "status": "insufficient_atoms",
+    "count": 0
+  },
+  "molecular_complexity": {
+    "complexity_score": 0.0,
+    "n_h2": 0,
+    "n_h2o": 0,
+    "n_organic": 0,
+    "n_rings": 0,
+    "status": "analyzed"
+  },
+  "metabolism": {
+    "photon_ratio": 0.37410071942446044,
+    "charge_variance": 0.26822089039291,
+    "energy_flow": 671.6076805472258,
+    "metabolism_score": 1.0,
+    "status": "analyzed"
+  },
+  "replication": {
+    "atom_counts": [
+      0,
+      1,
+      1,
+      0,
+      1
+    ],
+    "growth_rate": 1.0,
+    "is_growing": true,
+    "status": "analyzed"
+  },
+  "compartmentalization": {
+    "count": 1,
+    "compartments": [
+      {
+        "size": 542,
+        "internal_edges": 27714,
+        "external_edges": 0,
+        "score": 0.9999639184557099
+      }
+    ],
+    "status": "detected"
+  },
+  "information_storage": {
+    "n_atoms": 1,
+    "n_molecules": 0,
+    "info_bits_atoms": 1.0,
+    "info_bits_molecules": 0.0,
+    "total_info_bits": 1.0,
+    "status": "measured"
+  },
+  "life_score": {
+    "score": 0.54,
+    "metabolism": 1.0,
+    "complexity": 0.0,
+    "replication": 1.0,
+    "compartmentalization": 0.2,
+    "verdict": "Pre-biotic Soup",
+    "status": "computed"
+  },
+  "element_formation": {
+    "n_hydrogen": 1,
+    "n_helium": 0,
+    "n_heavy": 0,
+    "h_fraction": 1.0,
+    "he_fraction": 0.0,
+    "heavy_fraction": 0.0,
+    "status": "analyzed"
+  },
+  "reaction_networks": {
+    "status": "insufficient_atoms"
+  },
+  "chemical_complexity": {
+    "complexity_score": 10.0,
+    "n_element_types": 1,
+    "n_molecules": 0,
+    "n_bonds": 0,
+    "status": "measured"
+  }
+}

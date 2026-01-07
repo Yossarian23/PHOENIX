@@ -1,0 +1,297 @@
+{
+  "particle_distribution": {
+    "distribution": {
+      "photon": {
+        "count": 312,
+        "fraction": 0.37410071942446044,
+        "percentage": 37.410071942446045
+      },
+      "scalar": {
+        "count": 188,
+        "fraction": 0.22541966426858512,
+        "percentage": 22.54196642685851
+      },
+      "boson": {
+        "count": 246,
+        "fraction": 0.2949640287769784,
+        "percentage": 29.496402877697843
+      },
+      "neutron": {
+        "count": 14,
+        "fraction": 0.016786570743405275,
+        "percentage": 1.6786570743405276
+      },
+      "positron": {
+        "count": 14,
+        "fraction": 0.016786570743405275,
+        "percentage": 1.6786570743405276
+      },
+      "antiproton": {
+        "count": 16,
+        "fraction": 0.019184652278177457,
+        "percentage": 1.9184652278177456
+      },
+      "electron": {
+        "count": 14,
+        "fraction": 0.016786570743405275,
+        "percentage": 1.6786570743405276
+      },
+      "proton": {
+        "count": 16,
+        "fraction": 0.019184652278177457,
+        "percentage": 1.9184652278177456
+      },
+      "antineutron": {
+        "count": 14,
+        "fraction": 0.016786570743405275,
+        "percentage": 1.6786570743405276
+      }
+    },
+    "total_particles": 834,
+    "fermion_fraction": 0.0,
+    "photon_fraction": 0.37410071942446044,
+    "status": "low_fermions"
+  },
+  "spin_statistics": {
+    "status": "no_fermions"
+  },
+  "charge_distribution": {
+    "positive": 30,
+    "negative": 30,
+    "neutral": 774,
+    "total_charge": 0.0,
+    "avg_charge": 0.0,
+    "neutrality_fraction": 0.0,
+    "status": "neutral"
+  },
+  "mass_distribution": {
+    "by_type": {
+      "photon": {
+        "count": 312,
+        "total": 0.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "scalar": {
+        "count": 188,
+        "total": 515.2553600000001,
+        "mean": 2.7407200000000005,
+        "std": 4.440892098500626e-16,
+        "min": 2.74072,
+        "max": 2.74072
+      },
+      "boson": {
+        "count": 246,
+        "total": 84.27714000000003,
+        "mean": 0.3425900000000001,
+        "std": 1.1102230246251565e-16,
+        "min": 0.34259,
+        "max": 0.34259
+      },
+      "neutron": {
+        "count": 14,
+        "total": 48.0105626,
+        "mean": 3.4293259,
+        "std": 4.440892098500626e-16,
+        "min": 3.4293258999999994,
+        "max": 3.4293258999999994
+      },
+      "positron": {
+        "count": 14,
+        "total": 0.026121247324199993,
+        "mean": 0.0018658033802999995,
+        "std": 4.336808689942018e-19,
+        "min": 0.0018658033803,
+        "max": 0.0018658033803
+      },
+      "antiproton": {
+        "count": 16,
+        "total": 54.8144,
+        "mean": 3.4259,
+        "std": 0.0,
+        "min": 3.4259,
+        "max": 3.4259
+      },
+      "electron": {
+        "count": 14,
+        "total": 0.026121247324199993,
+        "mean": 0.0018658033802999995,
+        "std": 4.336808689942018e-19,
+        "min": 0.0018658033803,
+        "max": 0.0018658033803
+      },
+      "proton": {
+        "count": 16,
+        "total": 54.8144,
+        "mean": 3.4259,
+        "std": 0.0,
+        "min": 3.4259,
+        "max": 3.4259
+      },
+      "antineutron": {
+        "count": 14,
+        "total": 48.0105626,
+        "mean": 3.4293259,
+        "std": 4.440892098500626e-16,
+        "min": 3.4293258999999994,
+        "max": 3.4293258999999994
+      }
+    },
+    "total_mass": 805.2346676946484,
+    "status": "analyzed"
+  },
+  "temperature_evolution": {
+    "T_current": 10.58893016835573,
+    "T_initial": 43.18723681088886,
+    "T_mean": 19.363358462119503,
+    "T_std": 7.823983849735315,
+    "T_ratio": 0.24518656321364668,
+    "cooling_timescale": 1036.225581211726,
+    "status": "cooling"
+  },
+  "rho_evolution": {
+    "rho_current": 0.5877767935239523,
+    "rho_initial": 4.548014056715824,
+    "rho_mean": 1.7884819354909594,
+    "rho_std": 1.0435570718222043,
+    "min_rho": 0.5877767935239523,
+    "has_negative": false,
+    "trend": "stable",
+    "status": "healthy"
+  },
+  "entropy_growth": {
+    "S_current": 44.34249561437739,
+    "S_initial": 0.00024084077000000002,
+    "delta_S": 44.342254773607394,
+    "growth_rate": 0.604026349641571,
+    "violations": 0,
+    "violation_rate": 0.0,
+    "status": "growing"
+  },
+  "free_vs_bound": {
+    "E_free": 0.0,
+    "E_bound": 137036.00000000358,
+    "E_total": 137036.00000000358,
+    "free_fraction": 0.0,
+    "bound_fraction": 1.0,
+    "status": "low_free_energy"
+  },
+  "dimension": {
+    "d_mean": 3.0961549981770355,
+    "d_current": 3.0382168304957937,
+    "d_initial": 1.0,
+    "d_std": 0.2246860771787246,
+    "n_measurements": 75,
+    "source": "history",
+    "status": "good"
+  },
+  "clustering": {
+    "global_clustering": 0.3888419158731147,
+    "avg_clustering": 0.33754024565650026,
+    "local_mean": 0.2064095027395865,
+    "local_std": 0.17780986146696875,
+    "status": "analyzed"
+  },
+  "triangles": {
+    "count": 508023,
+    "density": 0.005273515742766393,
+    "per_node": 609.1402877697842,
+    "status": "analyzed"
+  },
+  "path_lengths": {
+    "mean": 1.9837988826815642,
+    "median": 2.0,
+    "max": 4.0,
+    "n_samples": 1790,
+    "status": "analyzed"
+  },
+  "components": {
+    "n_components": 293,
+    "largest_size": 542,
+    "largest_fraction": 0.6498800959232613,
+    "isolated_nodes": 292,
+    "small_components": 0,
+    "status": "fragmented"
+  },
+  "force_types": {
+    "distribution": {
+      "gravitational": {
+        "count": 6163,
+        "fraction": 0.22237858122248683
+      },
+      "strong": {
+        "count": 21528,
+        "fraction": 0.7767915133145703
+      },
+      "electromagnetic": {
+        "count": 23,
+        "fraction": 0.0008299054629429169
+      }
+    },
+    "total_edges": 27714,
+    "status": "analyzed"
+  },
+  "force_strengths": {
+    "mean_degree": 66.46043165467626,
+    "median_degree": 40.0,
+    "std_degree": 71.05470579856502,
+    "max_degree": 204,
+    "status": "analyzed"
+  },
+  "force_ranges": {
+    "mean_range": 1.0,
+    "median_range": 1.0,
+    "max_range": 1.0,
+    "status": "analyzed"
+  },
+  "coupling_constants": {
+    "alpha_em_expected": 0.0072973525205055605,
+    "status": "validated"
+  },
+  "energy_breakdown": {
+    "E_free": 0.0,
+    "E_entropy": 0.0,
+    "E_mass": 805.2346676946484,
+    "E_photons": 1364.3044656214165,
+    "E_field": 0.0,
+    "E_total": 2169.539133316065,
+    "free_fraction": 0.0,
+    "mass_fraction": 0.3711547099239806,
+    "photon_fraction": 0.6288452900760193,
+    "field_fraction": 0.0
+  },
+  "energy_conservation": {
+    "E_initial": 137035.9999999998,
+    "E_final": 137036.00000000358,
+    "E_drift": 3.7834979593753815e-09,
+    "E_drift_percent": 2.7609518370175628e-12,
+    "fluctuation": 1.3792686313707875e-14,
+    "status": "excellent"
+  },
+  "energy_flows": {
+    "delta_free": 671.6076805472258,
+    "delta_bound": -671.6076805434423,
+    "delta_entropy": 44.342254773607394,
+    "entropy_efficiency": 0.06602404358669237,
+    "flow_direction": "binding_to_free",
+    "status": "analyzed"
+  },
+  "annihilation_events": {
+    "count": 539,
+    "total_energy_released": 2324.7398453521196,
+    "avg_energy_per_event": 4.313060937573506,
+    "status": "detected"
+  },
+  "mutation_rate": {
+    "status": "no_mutation_data"
+  },
+  "matter_antimatter_asymmetry": {
+    "matter_count": 804,
+    "antimatter_count": 30,
+    "antimatter_fraction": 0.03597122302158273,
+    "expected_asymmetry": 1e-06,
+    "status": "too_much_antimatter"
+  }
+}

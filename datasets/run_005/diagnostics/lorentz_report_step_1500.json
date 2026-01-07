@@ -1,0 +1,70 @@
+{
+    "metadata": {
+        "run_id": "run_005",
+        "step": 1500,
+        "graph_size": 834,
+        "n_photons": 312,
+        "n_matter": 522
+    },
+    "scores": {
+        "overall": 0.7666666666666666,
+        "lorentz_invariance": 0.6499999999999999,
+        "causality": 1.0
+    },
+    "results": {
+        "light_speed": {
+            "status": "insufficient_data"
+        },
+        "boost_invariance": {
+            "avg_cv": 0.16519431040965918,
+            "n_frames": 3,
+            "status": "invariant"
+        },
+        "causal_structure": {
+            "causal_fraction": 1.0,
+            "avg_causal_distance": 0.0,
+            "n_pairs": 105,
+            "status": "good"
+        },
+        "time_translation": {
+            "avg_slope_norm": 0.011074316030788449,
+            "n_metrics": 4,
+            "status": "invariant"
+        },
+        "lorentz_violations": {
+            "ftl_fraction": 138.455,
+            "matter_edges": 27691,
+            "checked_edges": 200,
+            "status": "significant_violations"
+        },
+        "causal_cone": {
+            "max_radius": 3,
+            "avg_propagation": 1.6531365313653137,
+            "reachable_nodes": 542,
+            "profile": {
+                "0": 1,
+                "1": 204,
+                "2": 319,
+                "3": 18
+            },
+            "status": "detected"
+        },
+        "light_cone_dimension": {
+            "dimension": 0.9354838501801859,
+            "r_squared": 0.8869283594158137,
+            "n_points": 3,
+            "status": "computed"
+        },
+        "information_background": {
+            "final_virt_photons": 42848838,
+            "background_density": 33267.73136645963,
+            "density_slope": -28.296111763599622,
+            "exponential_growth_rate": 0.00028915863163929764,
+            "r_squared": 0.8735861998073381,
+            "status": "growing"
+        },
+        "overall_score": 0.7666666666666666,
+        "lorentz_score": 0.6499999999999999,
+        "causality_score": 1.0
+    }
+}

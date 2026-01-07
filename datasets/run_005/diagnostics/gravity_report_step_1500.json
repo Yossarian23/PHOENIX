@@ -1,0 +1,121 @@
+{
+  "inverse_square": {
+    "exponent": 3.0130775345069094,
+    "exponent_error": 0.24941872006628418,
+    "r_squared": 0.9990479977781282,
+    "amplitude": 13.500654611830667,
+    "n_points": 3,
+    "interpretation": "3D graph space (F \u221d 1/r\u00b3)",
+    "status": "graph_3d"
+  },
+  "gravitational_potential": {
+    "status": "insufficient_data"
+  },
+  "weak_field": {
+    "mean_perturbation": 0.2064095027395865,
+    "max_perturbation": 1.0,
+    "weak_field": false,
+    "status": "strong_field"
+  },
+  "schwarzschild_metric": {
+    "M_total": 799.7513618912681,
+    "radii": [
+      1,
+      2,
+      3
+    ],
+    "g_tt": [
+      -0.8311540972955046,
+      -0.8972153886716355,
+      -0.940496401031566
+    ],
+    "g_rr": [
+      1.2012134927157558,
+      1.1131959735572032,
+      1.063102154248905
+    ],
+    "g_tt_asymptotic": -0.940496401031566,
+    "g_rr_asymptotic": 1.063102154248905,
+    "schwarzschild_like": true,
+    "status": "schwarzschild"
+  },
+  "schwarzschild_radius": {
+    "status": "insufficient_data"
+  },
+  "metric_coefficients": {
+    "g_00_mean": -0.4016000000000001,
+    "g_00_std": 0.6791387487104532,
+    "g_11_mean": 1.195333479881509,
+    "g_11_std": 0.16919273861544779,
+    "n_samples": 100,
+    "status": "measured"
+  },
+  "event_horizons": {
+    "status": "insufficient_testable_photons"
+  },
+  "escape_probability": {
+    "status": "insufficient_data"
+  },
+  "photon_trapping": {
+    "n_photons": 312,
+    "n_trapped": 0,
+    "efficiency": 0.0,
+    "status": "low_trapping"
+  },
+  "gravitational_redshift": {
+    "status": "insufficient_samples"
+  },
+  "energy_gradient": {
+    "status": "insufficient_bins"
+  },
+  "geodesics": {
+    "status": "no_curvature_data"
+  },
+  "equivalence_principle": {
+    "n_tested": 50,
+    "violations": 0,
+    "violation_rate": 0.0,
+    "status": "satisfied"
+  },
+  "ricci_curvature": {
+    "mean": -0.05153650932797393,
+    "std": 0.1199497007696064,
+    "n_samples": 65,
+    "curvature_sign": "negative",
+    "status": "measured"
+  },
+  "tidal_forces": {
+    "mean_strength": 0.060643965437382145,
+    "max_strength": 0.0989618975714259,
+    "strong_tidal": false,
+    "status": "weak"
+  },
+  "riemann_signature": {
+    "mean": 0.04132402141582679,
+    "n_paths": 20,
+    "status": "measured"
+  },
+  "perihelion_precession": {
+    "status": "requires_trajectory_data"
+  },
+  "light_bending": {
+    "n_photons_tested": 30,
+    "n_bent": 0,
+    "bending_fraction": 0.0,
+    "status": "minimal"
+  },
+  "friedmann": {
+    "H_current": 0.00019287368627201465,
+    "a_initial": 6.7968843858592365,
+    "a_final": 10.877427123742624,
+    "accelerating": true,
+    "status": "expanding"
+  },
+  "einstein_equations": {
+    "correlation": 0.881839203829628,
+    "p_value": 2.757780592908371e-17,
+    "n_samples": 50,
+    "satisfied": true,
+    "status": "satisfied"
+  }
+}
