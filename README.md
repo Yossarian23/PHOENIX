@@ -3,7 +3,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Status: Research](https://img.shields.io/badge/status-research-orange.svg)]()
-[![Paper: ArXiv](https://img.shields.io/badge/paper-arXiv-red.svg)](https://arxiv.org/abs/2501.XXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18175398.svg)](https://doi.org/10.5281/zenodo.18175398)
 
 > **🚨 Repository Status:** Currently private - will be made public upon paper publication (expected: January 2026)
 
@@ -90,7 +90,7 @@ Paper:              ArXiv 2501.XXXXX (pending)
 
 **Marcel Langjahr** (2026)
 
-- 📝 **ArXiv:** [2501.XXXXX](https://arxiv.org/abs/2501.XXXXX) *(coming soon)*
+- 📦 **Archive (Zenodo):** [DOI: 10.5281/zenodo.18175398](https://doi.org/10.5281/zenodo.18175398)
 - 🌐 **Website:** [marcel.langjahr.org](https://marcel.langjahr.org/)
 - 📧 **Contact:** marcel@langjahr.org
 
@@ -389,7 +389,7 @@ Once public, contributions welcome! Areas of interest:
 
 ## 🔗 Links
 
-- 📄 **Paper:** [ArXiv 2501.XXXXX](https://arxiv.org/abs/2501.XXXXX) *(coming soon)*
+- 📦 **Archive (Zenodo):** [DOI: 10.5281/zenodo.18175398](https://doi.org/10.5281/zenodo.18175398)
 - 🌐 **Website:** [marcel.langjahr.org](https://marcel.langjahr.org/)
 - 💬 **Discussions:** [GitHub Discussions](https://github.com/Yossarian23/PHOENIX/discussions) *(when public)*
 - 📧 **Contact:** marcel@langjahr.org
