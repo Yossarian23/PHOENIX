@@ -37,7 +37,7 @@ Website:            https://marcel.langjahr.org/
 GitHub:             https://github.com/Yossarian23/PHOENIX
 First Release:      January 2026
 License:            GNU General Public License v3.0 (GPL-3.0)
-Paper:              ArXiv 2501.XXXXX (pending)
+Paper:              https://zenodo.org/records/18175398
 ```
 
 **⚠️ IMPORTANT:** This software is protected under GPL-3.0. Any use, modification, or distribution must comply with the license terms. See [LICENSE](LICENSE) for full details.
