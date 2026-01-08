@@ -9,11 +9,6 @@ Contact: marcel@langjahr.org
 ═══════════════════════════════════════════════════════════════════════════════
 PHOENIX v3.3 - CORE CONSTANTS
 ═══════════════════════════════════════════════════════════════════════════════
-
-All physical constants and derived parameters.
-Every parameter is justified by physics or computation needs.
-
-PRINCIPLE: Energy scales from α_EM (fine structure constant)
 """
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -29,10 +24,6 @@ C_LIGHT = 1.0                       # Speed of light (c = 1 in natural units)
 # 2. SYSTEM SCALE (COMPUTATIONALLY MOTIVATED)
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Scale factor: chosen for ~500 particles at reasonable temperature
-# This is the ONLY "free" parameter, but computationally motivated:
-# - Too small: insufficient for statistical mechanics
-# - Too large: computational burden
 ENERGY_SCALE_FACTOR = 1
 
 # Total system energy emerges from fundamental constant
@@ -43,27 +34,35 @@ E_REF = (1.0 / ALPHA_EM) * 1000
 # 3. DERIVED ENERGY SCALES (ALL FROM INIT_ENERGY!)
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Energy fractions (physically motivated)
 MASS_PARTICLE_FRACTION = 0.000025       # Particle rest mass
-J_COUPLING_FRACTION = 0.0000022        # Bond strength  
-PENALTY_LOOSE_END_FRACTION = 0.0003    # Topology penalty
-E_EM_FRACTION = 0.00005                # EM energy scale
+J_COUPLING_FRACTION = 0.0000022         # Bond strength  
+PENALTY_LOOSE_END_FRACTION = 0.0003     # Topology penalty
+E_EM_FRACTION = 0.00005                 # EM energy scale
 
-# Absolute values
 MASS_PARTICLE_BASE = INIT_ENERGY * MASS_PARTICLE_FRACTION
 J_COUPLING_BASE = INIT_ENERGY * J_COUPLING_FRACTION
 PENALTY_LOOSE_END = INIT_ENERGY * PENALTY_LOOSE_END_FRACTION
 E_EM_SCALE = INIT_ENERGY * E_EM_FRACTION
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 4. COMPUTATIONAL PARAMETERS (NOT PHYSICS)
+# 4. COMPUTATIONAL PARAMETERS & MODES
 # ═══════════════════════════════════════════════════════════════════════════
 
-MAX_STEPS = 1500                    # Computational limit
+# --- SIMULATION MODES ---
+# Mode 1: Finite (Runs until MAX_STEPS, then stops)
+# Mode 2: Infinite (Runs forever, MAX_STEPS is ignored/overwritten)
+SIMULATION_MODE = 1 
+
+MAX_STEPS = 1500                    # Limit for Mode 1
 SNAPSHOT_INTERVAL = 200             # Save frequency
 VALIDATION_INTERVAL = 200           # Physics check frequency
 CONSOLE_LOG_SECONDS = 10            # Console update interval
 HISTORY_LOG_STEPS = 20              # History snapshot interval
+
+# --- SNAPSHOT MANAGEMENT ---
+# To prevent filling the hard drive in Mode 2
+SNAPSHOT_RETENTION_COUNT = 5        # Keep only the N most recent snapshots
+SNAPSHOT_PRUNE_FREQ = 1000          # Check for deletion every X steps
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 5. UNIVERSAL PHYSICS CONSTANTS
@@ -99,21 +98,15 @@ PHOTON_SPEED = 1.0                  # Speed of light in graph units
 COULOMB_ENERGY_BUDGET_FRACTION = 0.05  # EM energy budget (~5% observed)
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 10. MATTER-ANTIMATTER ASYMMETRY (EVOLUTION PARAMETER!)
+# 10. MATTER-ANTIMATTER ASYMMETRY
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Asymmetry = "Mutation Rate" for evolution
-# Too low (10^-10): System freezes, no variability
-# Optimal (10^-6): Rare mutations, evolution possible
-# Too high (10^-2): Destruction dominates, no stability
 MATTER_ANTIMATTER_ASYMMETRY = 1.000001  # ~10^-6 antimatter fraction
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 11. ELECTRON DYNAMICS (MULTI-SCALE)
+# 11. ELECTRON DYNAMICS
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Electrons are ~1800× lighter → fast dynamics
-# Adiabatic approximation: electrons equilibrate quickly to nuclei
 ELECTRON_RELAXATION_STEPS = 10      # Mini-steps per nucleon step
 ELECTRON_BINDING_STRENGTH = 0.15    # EM binding to nuclei
 
@@ -132,22 +125,18 @@ RHO_MIN = -100                         # Minimum physical Rho
 def print_constants_summary():
     """Print summary of key constants"""
     print("═" * 80)
-    print("EUCQTR v3.2 - CONSTANTS SUMMARY")
+    print("PHOENIX v3.3 - CONSTANTS SUMMARY")
     print("═" * 80)
+    print(f"Mode: {'INFINITE' if SIMULATION_MODE == 2 else 'FINITE'}")
+    if SIMULATION_MODE == 2:
+        print(f"  ↳ Keeping last {SNAPSHOT_RETENTION_COUNT} snapshots")
+    print("-" * 40)
     print(f"Fundamental:")
     print(f"  α_EM = {ALPHA_EM:.6f}")
     print(f"  k_B  = {K_BOLTZMANN}")
     print()
     print(f"System Scale:")
     print(f"  INIT_ENERGY = {INIT_ENERGY:.1f}")
-    print()
-    print(f"Derived Scales:")
-    print(f"  MASS_BASE    = {MASS_PARTICLE_BASE:.3f}")
-    print(f"  J_COUPLING   = {J_COUPLING_BASE:.6f}")
-    print()
-    print(f"Evolution:")
-    print(f"  Asymmetry = {MATTER_ANTIMATTER_ASYMMETRY:.9f}")
-    print(f"  Anti-fraction ≈ {(MATTER_ANTIMATTER_ASYMMETRY - 1)*1e6:.1f}×10⁻⁶")
     print("═" * 80)
 
 if __name__ == "__main__":
