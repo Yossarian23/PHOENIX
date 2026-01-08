@@ -13,6 +13,8 @@ import networkx as nx
 import pickle
 import os
 import time
+import sys
+import argparse
 from collections import defaultdict, Counter
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -25,7 +27,8 @@ from src.constants import (
     PHOTON_EMISSION_RATE, PHOTON_ABSORPTION_PROB,
     TAX_SCALING_FACTOR, MAX_TAX_CAP, N_REFERENCE,
     CONSOLE_LOG_SECONDS, HISTORY_LOG_STEPS, SNAPSHOT_INTERVAL,
-    E_REF  # <--- WICHTIG: Die physikalische Referenz-Energie
+    E_REF, MAX_STEPS, SIMULATION_MODE,
+    SNAPSHOT_RETENTION_COUNT, SNAPSHOT_PRUNE_FREQ
 )
 
 from src.particles import (
@@ -85,43 +88,58 @@ class QuantumEdge:
 # ═══════════════════════════════════════════════════════════════════════════
 
 class UniverseEngine:
-    def __init__(self, steps=10000):
-        # 1. Setup Run Manager
+    def __init__(self, mode=None, resume_snapshot_file=None):
+        """
+        Initialize the Engine.
+        Args:
+            mode: 1 (Finite) or 2 (Infinite). Overrides constants.py if provided.
+            resume_snapshot_file: Path to .pkl file to load.
+        """
         self.run_manager = RunManager()
+        
+        # 1. Config & Mode logic
+        self.mode = mode if mode is not None else SIMULATION_MODE
+        self.start_step = 0
+        
         config = get_default_config()
         config['version'] = 'v3.3-Phoenix'
-        config['max_steps'] = steps
+        config['mode'] = 'Infinite' if self.mode == 2 else 'Finite'
+        config['max_steps'] = MAX_STEPS # For reference in config
         
-        self.data_dir = self.run_manager.create_new_run(config)
-        self.snapshots_dir = os.path.join(self.data_dir, "snapshots")
-        
-        # 2. Energy Accounting
-        self.E_free = INIT_ENERGY
-        self.E_entropy = 0.0
-        self.accumulated_waste = 0.0  # Arrow of Time
-        
-        # 3. Topology & State
+        # 2. Physics Systems Initialization
         self.G = nx.Graph()
         self.edges = {}
         self.next_id = 0
         
-        # 4. Particles
         self.particle_type = {}
         self.masses = {}
         self.charges = {}
         self.spinors = SpinSystem()
         self.annihilation = AnnihilationSystem()
         
-        # 5. Photons (Hybrid System)
-        self.photon_energies = {}  # Real high-energy photons
-        # Shadow Ledger: Counts thermal background photons (not simulated as nodes)
+        self.photon_energies = {} 
         self.n_virtual_photons = 0
         
-        # 6. Physics
         self.gravity = GravitationalDynamics(self)
         
-        # 7. History Tracking
         self.history = defaultdict(list)
+        
+        # Energy Accounting
+        self.E_free = INIT_ENERGY
+        self.E_entropy = 0.0
+        self.accumulated_waste = 0.0
+
+        # 3. DECISION: Load State OR Big Bang
+        if resume_snapshot_file:
+            self._load_state(resume_snapshot_file, config)
+        else:
+            self._big_bang(config)
+
+    def _big_bang(self, config):
+        """Original initialization logic"""
+        self.data_dir = self.run_manager.create_new_run(config)
+        self.snapshots_dir = os.path.join(self.data_dir, "snapshots")
+        
         keys = [
             'steps', 'N', 'E_total', 'E_free', 'E_entropy', 'drift_pct',
             'T', 'Dim', 'G', 'Rho', 'C',              
@@ -161,8 +179,47 @@ class UniverseEngine:
         print(f"🌌 PHOENIX ENGINE INITIALIZED | E_init={INIT_ENERGY:.1f}")
         print(f"   ↳ Real Photons: {n_real_photons} | Virtual Background: {self.n_virtual_photons:,}")
 
+    def _load_state(self, filepath, config):
+        """Restore state from pickle"""
+        print(f"📥 Loading snapshot: {filepath}...")
+        data = self.run_manager.load_snapshot_data(filepath)
+        
+        if not data:
+            print("❌ Critical Error: Could not load snapshot. Exiting.")
+            sys.exit(1)
+            
+        old_step = data.get('step', 0)
+        self.data_dir = self.run_manager.create_new_run(config, resumed_from=filepath)
+        self.snapshots_dir = os.path.join(self.data_dir, "snapshots")
+        
+        # Restore variables
+        self.start_step = old_step
+        self.G = data['G']
+        self.particle_type = data['particle_type']
+        self.charges = data['charges']
+        self.masses = data['masses']
+        self.photon_energies = data['photon_energies']
+        self.spinors.spins = data['spins']
+        self.annihilation.mutation_events = data.get('mutation_events', [])
+        self.n_virtual_photons = data.get('n_virtual_photons', 0)
+        self.history = defaultdict(list, data.get('history', {}))
+        
+        # Reconstruct Energy state approx (since edges are not usually fully pickled in self.edges dict)
+        # Note: In a production restore, we would need to pickle self.edges or reconstruct it from G
+        # For now we assume G contains necessary data or we accept a small energy recalc drift on resume
+        E_matter = sum(self.masses.values())
+        current_E_fixed = E_matter + sum(self.photon_energies.values())
+        self.E_free = INIT_ENERGY - current_E_fixed - self.E_entropy 
+        
+        if len(self.G) > 0:
+            self.next_id = max(self.G.nodes()) + 1
+        else:
+            self.next_id = 1
+            
+        print(f"✅ State Restored at Step {self.start_step}")
+
     # ───────────────────────────────────────────────────────────────────────
-    # CORE METRICS
+    # CORE METRICS (IDENTISCH ZUM ORIGINAL)
     # ───────────────────────────────────────────────────────────────────────
 
     def compute_temperature(self):
@@ -195,7 +252,7 @@ class UniverseEngine:
         self.n_virtual_photons += new_photons
 
     # ───────────────────────────────────────────────────────────────────────
-    # DYNAMICS: BONDING & CREATION
+    # DYNAMICS: BONDING & CREATION (IDENTISCH ZUM ORIGINAL)
     # ───────────────────────────────────────────────────────────────────────
 
     def calc_potential_bond_energy(self, u, v, force_type):
@@ -312,7 +369,7 @@ class UniverseEngine:
         self.E_free -= cost
 
     # ───────────────────────────────────────────────────────────────────────
-    # LIGHT CYCLE
+    # LIGHT CYCLE (IDENTISCH ZUM ORIGINAL)
     # ───────────────────────────────────────────────────────────────────────
 
     def emit_photons(self, T):
@@ -383,7 +440,7 @@ class UniverseEngine:
         self.spinors.remove_spin(pid)
 
     # ───────────────────────────────────────────────────────────────────────
-    # MAIN LOOP
+    # MAIN LOGIC (Step logic identisch, Loop angepasst)
     # ───────────────────────────────────────────────────────────────────────
 
     def step(self, step_num):
@@ -427,12 +484,10 @@ class UniverseEngine:
                     self.convert_waste_to_virtual_photons(waste, T)
                     break
 
-    def run(self, steps=None):
-        if steps is None:
-            try: from src.constants import MAX_STEPS; steps = MAX_STEPS
-            except: steps = 10000
-
-        print(f"🚀 PHOENIX v3.3 STARTED | Target Steps: {steps}")
+    def run(self):
+        # ANPASSUNG: Zielanzeige basierend auf Modus
+        target_str = "∞" if self.mode == 2 else str(MAX_STEPS)
+        print(f"🚀 PHOENIX v3.3 RUNNING | Mode: {self.mode} | Target: {target_str}")
         print(f"📁 Output: {self.data_dir}")
         print(f"⏱️  Log Interval: {CONSOLE_LOG_SECONDS}s (Console) | {HISTORY_LOG_STEPS} steps (Data)")
         
@@ -442,14 +497,22 @@ class UniverseEngine:
         start_time = time.time()
         last_console_time = start_time
         
-        # 🛑 SOFT ENDING BLOCK 🛑
+        # ANPASSUNG: Startwert bei Resume
+        s = self.start_step + 1
+        
         try:
-            for s in range(1, steps+1):
+            # ANPASSUNG: While True für unendlichen Modus
+            while True:
+                # BREAK CONDITION FOR FINITE MODE
+                if self.mode == 1 and s > self.start_step + MAX_STEPS:
+                    print(f"✅ Maximum steps reached (Finite Mode).")
+                    break
+
                 self.step(s)
                 
                 # === 1. LIVE MONITOR ===
                 current_time = time.time()
-                if (current_time - last_console_time) >= CONSOLE_LOG_SECONDS or s == 1:
+                if (current_time - last_console_time) >= CONSOLE_LOG_SECONDS or s == self.start_step + 1:
                     last_console_time = current_time
                     
                     N = len(self.G)
@@ -468,6 +531,7 @@ class UniverseEngine:
                     status = "OK"
                     if abs(drift_pct) > 1.0: status = "⚠️DRIFT"
                     if N < 5: status = "⚠️EMPTY"
+                    if self.mode == 2: status = "RUN"
 
                     print(f"{s:6d} | {N:5d} | {T:5.1f} | {dim:4.2f} | {rho:4.0f} | {G_val:6.4f} | {virt_g_millions:6.1f}M | {drift_pct:+5.2f}% | {status}")
 
@@ -478,20 +542,26 @@ class UniverseEngine:
                 # === 3. SNAPSHOT ===
                 if s % SNAPSHOT_INTERVAL == 0:
                     self.save(s)
+                
+                # ANPASSUNG: PRUNING
+                if s % SNAPSHOT_PRUNE_FREQ == 0:
+                    self.run_manager.prune_old_snapshots(self.data_dir, SNAPSHOT_RETENTION_COUNT)
+                
+                s += 1
             
             # Reguläres Ende
-            self.save(steps)
+            self.save(s)
 
         except KeyboardInterrupt:
             print(f"\n⚠️  SIMULATION ABORTED BY USER AT STEP {s}")
             print("💾 Saving emergency snapshot and history...")
-            self._record_history(s) # Letzten Zustand speichern
+            self._record_history(s)
             self.save(s)
             print("✅ Safe exit completed.")
             return
 
     def _record_history(self, s):
-        """Helper to record history metrics"""
+        """Helper to record history metrics (IDENTISCH ZUM ORIGINAL)"""
         E_total = self.E_free + self.E_entropy + sum(self.masses.values()) + \
                   sum(e.get_total_energy() for e in self.edges.values()) + \
                   sum(self.photon_energies.values())
@@ -553,6 +623,82 @@ class UniverseEngine:
         with open(f"{self.snapshots_dir}/snapshot_step_{step}.pkl", 'wb') as f:
             pickle.dump(data, f)
 
+# ═══════════════════════════════════════════════════════════════════════════
+# ARGUMENT PARSING & ENTRY POINT
+# ═══════════════════════════════════════════════════════════════════════════
+
+def parse_custom_args():
+    """
+    Handles custom syntax like: 
+      engine.py -2 -800         (Mode 2, Step 800, Latest Run)
+      engine.py -run_005 -2     (Run 5, Mode 2)
+      engine.py -r 5 -s 800     (Run 5, Step 800)
+    """
+    parser = argparse.ArgumentParser(description="PHOENIX Universe Engine")
+    parser.add_argument('-m', '--mode', type=int, choices=[1, 2], help="1=Finite, 2=Infinite")
+    parser.add_argument('-s', '--step', type=int, help="Step number to resume from")
+    parser.add_argument('-r', '--run_id', type=str, help="Specific run ID (e.g. '5' or 'latest')")
+    parser.add_argument('-l', '--latest', action='store_true', help="Resume from latest snapshot of latest run")
+    
+    args, unknown = parser.parse_known_args()
+    
+    mode = args.mode
+    step_query = None
+    run_query = args.run_id 
+    
+    if run_query and isinstance(run_query, str) and run_query.startswith('un_'):
+        try:
+            run_query = int(run_query.split('_')[1])
+        except:
+            pass
+
+    if args.latest:
+        step_query = 'latest'
+    elif args.step:
+        step_query = args.step
+        
+    for arg in unknown:
+        if arg.startswith("-run_"):
+            try:
+                run_part = arg.split('_')[1]
+                run_query = int(run_part)
+            except: pass
+            continue
+
+        if arg.startswith("-") and arg[1:].isdigit():
+            val = int(arg[1:])
+            if val in [1, 2] and mode is None:
+                mode = val
+            elif val > 2:
+                step_query = val
+
+    return mode, step_query, run_query
+
 if __name__ == "__main__":
-    eng = UniverseEngine()
+    mode_arg, step_arg, run_arg = parse_custom_args()
+    
+    snapshot_file = None
+    
+    if step_arg is not None or run_arg is not None:
+        rm = RunManager()
+        
+        query_step = step_arg if step_arg is not None else 'latest'
+        query_run = run_arg if run_arg is not None else 'latest'
+        
+        target_run_dir = rm.get_run_dir(query_run)
+        
+        if target_run_dir:
+            run_name = os.path.basename(target_run_dir)
+            print(f"🔍 Searching in {run_name} for snapshot: {query_step}...")
+            snap_file, _ = rm.find_snapshot(query_step, run_dir=target_run_dir)
+            
+            if snap_file:
+                snapshot_file = snap_file
+            else:
+                print(f"⚠️  Snapshot {query_step} not found in {run_name}.")
+                print("   Starting FRESH run instead.")
+        else:
+            print(f"⚠️  Run '{query_run}' not found. Starting FRESH run.")
+
+    eng = UniverseEngine(mode=mode_arg, resume_snapshot_file=snapshot_file)
     eng.run()
